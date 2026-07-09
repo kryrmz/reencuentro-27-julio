@@ -355,6 +355,21 @@
     50%      { transform: translate(-50%, 9px); }
   }
 
+  .top-hint {
+    display: inline-flex;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: var(--deep);
+    opacity: 0.7;
+    text-decoration: none;
+    animation: bob-up 2.6s ease-in-out infinite;
+  }
+
+  @keyframes bob-up {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+  }
+
   /* ============ Sea creatures ============ */
   .creature { position: absolute; pointer-events: none; filter: var(--glow); }
 
@@ -643,7 +658,7 @@
   <div class="content">
 
     <!-- ============ Hero ============ -->
-    <header class="hero">
+    <header class="hero" id="arriba">
 
       <svg class="creature jelly-a" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
         <path class="jelly-dome" d="M18 66 Q18 14 60 14 Q102 14 102 66 Q91 74 80 68 Q70 76 60 70 Q50 76 40 68 Q29 74 18 66 Z"/>
@@ -734,6 +749,12 @@
     <footer class="seabed">
       <p class="farewell">Te extra&ntilde;o bebita</p>
       <p class="farewell-date">27 &middot; 07 &middot; 2026</p>
+
+      <a class="top-hint" href="#arriba" aria-label="Volver arriba">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 15l7-7 7 7"/>
+        </svg>
+      </a>
 
       <div class="whale-scene" aria-hidden="true">
         <div class="whale-wrap">
@@ -898,9 +919,9 @@
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* ---------- Flecha: desplazamiento suave ---------- */
-  var hint = document.querySelector(".scroll-hint");
-  if (hint) {
+  /* ---------- Flechas: desplazamiento suave en ambos sentidos ---------- */
+  var hints = document.querySelectorAll(".scroll-hint, .top-hint");
+  Array.prototype.forEach.call(hints, function (hint) {
     hint.addEventListener("click", function (ev) {
       var hash = hint.getAttribute("href") || "";
       var target = hash.charAt(0) === "#" ? document.getElementById(hash.slice(1)) : null;
@@ -908,7 +929,7 @@
       ev.preventDefault();
       target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
     });
-  }
+  });
 
 })();
 </script>
